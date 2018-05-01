@@ -31,9 +31,9 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
-  setTimeout(next, 500);
-});
+// app.use(function(req, res, next) {
+//   setTimeout(next, 500);
+// });
 
 app.get("/api/user", function(req, res) {
   res.json(getUser());

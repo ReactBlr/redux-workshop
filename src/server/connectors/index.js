@@ -38,7 +38,10 @@ export function getCartItem(id) {
 }
 
 export function getCartItems() {
-  return cartItems;
+  return cartItems.map(c => ({
+    ...c,
+    product: getProduct(c.productId)
+  }));
 }
 
 export function addToCart(args) {
