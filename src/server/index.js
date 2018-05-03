@@ -58,7 +58,7 @@ app.get("/api/cart-items/:id", function(req, res) {
 });
 
 app.post("/api/cart-items", function(req, res) {
-  addToCart(req.body).then(res.json);
+  addToCart(req.body).then(response => res.json(response));
 });
 
 app.post("/api/cart-items/:id", function(req, res) {
