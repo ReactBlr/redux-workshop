@@ -1,10 +1,11 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroup, ListGroupItem } from "reactstrap";
-import ProductSelect from "./ProductSelect";
+import * as productActionCreators from "../redux/actions";
 import Price from "./Price";
-import { connect } from "react-redux";
-import { fetchProducts } from "../actions";
+import ProductSelect from "./ProductSelect";
 
 function Product({ product }) {
   return (
@@ -22,9 +23,10 @@ function Product({ product }) {
   );
 }
 
-export class Products extends React.Component {
+class Products extends React.Component {
   componentDidMount() {
-    this.props.fetchProducts();
+    const { productActions } = this.props;
+    productActions.getProducts();
   }
   render() {
     const { products } = this.props;
@@ -41,6 +43,12 @@ export class Products extends React.Component {
   }
 }
 
-export default connect(state => ({ products: state.products }), {
-  fetchProducts
-})(Products);
+const mapStateToProps = state => ({
+  products: state.products
+});
+
+const mapDispatchToProps = dispatch => ({
+  productActions: bindActionCreators(productActionCreators, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

@@ -13,7 +13,7 @@ import {
 const PORT = 8000;
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(
@@ -45,6 +45,7 @@ app.get("/api/products", function(req, res) {
 
 app.get("/api/products/:id", function(req, res) {
   const id = parseInt(req.params.id, 10);
+  console.log("product id", id);
   res.json(getProduct(id));
 });
 

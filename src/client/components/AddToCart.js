@@ -1,12 +1,26 @@
 import React from "react";
-import { Button, UncontrolledAlert } from "reactstrap";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Button } from "reactstrap";
+import * as actionCreators from "../redux/actions";
 
-export default class AddToCart extends React.Component {
+class AddToCart extends React.Component {
   render() {
+    const { actions: { addItemsToCart }, product } = this.props;
     return (
-      <Button className="mt-4" color="primary" o>
+      <Button
+        className="mt-4"
+        color="primary"
+        onClick={() => addItemsToCart(product)}
+      >
         Add to cart
       </Button>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(actionCreators, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(AddToCart);

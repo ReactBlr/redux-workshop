@@ -1,12 +1,24 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { Media } from "reactstrap";
+import * as actionCreators from "../redux/actions";
 import AddToCart from "./AddToCart";
 import Price from "./Price";
-import { connect } from "react-redux";
 
-export class Product extends React.Component {
+class Product extends React.Component {
+  componentDidMount() {
+    const { product, actions, match } = this.props;
+    if (!product) {
+      const productId = parseInt(match.params.id, 10);
+      actions.getProducts(productId);
+    }
+  }
+
   render() {
-    const { product } = this.props;
+    const { products, match } = this.props;
+    const productId = parseInt(match.params.id, 10);
+    const product = products.length && products.find(p => p.id === productId);
     if (!product) {
       return null;
     }
@@ -28,10 +40,12 @@ export class Product extends React.Component {
   }
 }
 
-export default connect((state, props) => {
-  return {
-    product: state.products.find(
-      p => p.id === parseInt(props.match.params.id, 10)
-    )
-  };
-})(Product);
+const mapStateToProps = (state, props) => ({
+  products: state.products
+});
+
+const mapDisptachToProps = dispatch => ({
+  actions: bindActionCreators(actionCreators, dispatch)
+});
+
+export default connect(mapStateToProps, mapDisptachToProps)(Product);

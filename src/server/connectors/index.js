@@ -30,7 +30,8 @@ export function getProducts() {
 }
 
 export function getProduct(id) {
-  return products.find(product => product.id === id);
+  console.log("productId", id);
+  return [products.find(product => product.id === id)];
 }
 
 export function getCartItem(id) {
@@ -38,19 +39,16 @@ export function getCartItem(id) {
 }
 
 export function getCartItems() {
-  return cartItems.map(c => ({
-    ...c,
-    product: getProduct(c.productId)
-  }));
+  return cartItems;
 }
 
-export function addToCart(args) {
-  if (cartItems.find(c => c.productId === parseInt(args.productId, 10))) {
+export function addToCart({ productId }) {
+  if (cartItems.find(c => c.productId === parseInt(productId, 10))) {
     throw new Error("Product already in cart");
   }
   const newCartItem = {
     id: cartItems.length + 1,
-    productId: parseInt(args.productId, 10)
+    product: products.find(p => p.id === productId)
   };
   cartItems.push(newCartItem);
   return newCartItem;
