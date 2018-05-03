@@ -45,7 +45,6 @@ app.get("/api/products", function(req, res) {
 
 app.get("/api/products/:id", function(req, res) {
   const id = parseInt(req.params.id, 10);
-  console.log("product id", id);
   res.json(getProduct(id));
 });
 
@@ -59,7 +58,7 @@ app.get("/api/cart-items/:id", function(req, res) {
 });
 
 app.post("/api/cart-items", function(req, res) {
-  res.json(addToCart(req.body));
+  addToCart(req.body).then(res.json);
 });
 
 app.post("/api/cart-items/:id", function(req, res) {

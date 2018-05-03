@@ -19,12 +19,12 @@ function CartItem({ cartItem }) {
 export class Cart extends React.Component {
   render() {
     const { cartItems } = this.props;
-    if (!cartItems.length) {
+    if (!cartItems.ids.length) {
       return <Alert color="primary">Cart is empty</Alert>;
     }
     return (
       <ListGroup>
-        {cartItems.map(cartItem => (
+        {Object.values(cartItems.byId).map(cartItem => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ListGroup>

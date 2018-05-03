@@ -34,7 +34,7 @@ class Products extends React.Component {
       <div>
         Products
         <ListGroup>
-          {products.map(product => (
+          {Object.values(products.byId).map(product => (
             <Product key={product.id} product={product} />
           ))}
         </ListGroup>

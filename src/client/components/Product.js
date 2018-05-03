@@ -18,7 +18,7 @@ class Product extends React.Component {
   render() {
     const { products, match } = this.props;
     const productId = parseInt(match.params.id, 10);
-    const product = products.length && products.find(p => p.id === productId);
+    const product = products.ids.length && products.byId[productId];
     if (!product) {
       return null;
     }

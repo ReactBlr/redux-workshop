@@ -12,11 +12,11 @@ class CartBadge extends React.Component {
 
   render() {
     const { cartItems } = this.props;
-    if (!cartItems) {
+    if (!cartItems.ids.length) {
       return null;
     }
-    return cartItems.length ? (
-      <Badge color="dark">{cartItems.length}</Badge>
+    return cartItems.ids.length ? (
+      <Badge color="dark">{cartItems.ids.length}</Badge>
     ) : null;
   }
 }

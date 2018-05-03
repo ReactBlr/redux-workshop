@@ -30,7 +30,6 @@ export function getProducts() {
 }
 
 export function getProduct(id) {
-  console.log("productId", id);
   return [products.find(product => product.id === id)];
 }
 
@@ -51,7 +50,11 @@ export function addToCart({ productId }) {
     product: products.find(p => p.id === productId)
   };
   cartItems.push(newCartItem);
-  return newCartItem;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(newCartItem);
+    }, 5000);
+  });
 }
 
 export function deleteCartItem(args) {

@@ -6,21 +6,29 @@ import * as actionCreators from "../redux/actions";
 
 class AddToCart extends React.Component {
   render() {
-    const { actions: { addItemsToCart }, product } = this.props;
+    const {
+      actions: { addItemsToCart },
+      cartItems: { isLoading },
+      product
+    } = this.props;
     return (
       <Button
         className="mt-4"
         color="primary"
         onClick={() => addItemsToCart(product)}
       >
-        Add to cart
+        {isLoading ? "Adding..." : "Add to cart"}
       </Button>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  cartItems: state.cartItems
+});
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actionCreators, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(AddToCart);
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCart);
