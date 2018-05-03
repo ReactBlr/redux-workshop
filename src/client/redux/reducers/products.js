@@ -1,4 +1,5 @@
 import * as actionTypes from "../actionTypes";
+import { handle } from "redux-pack";
 
 const initialState = {
   byId: {},
@@ -10,26 +11,24 @@ const initialState = {
 
 export default function productsReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.GET_CART_ITEMS_REQUEST:
-      return {
-        ...state,
-        isLoading: true
-      };
-
-    case actionTypes.GET_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        isLoading: false
-      };
-
-    case actionTypes.GET_PRODUCTS_FAILURE:
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        errorMsg: action.payload
-      };
+    case actionTypes.GET_PRODUCTS:
+      return handle(state, action, {
+        start: s => ({
+          ...s,
+          isLoading: true
+        }),
+        success: s => ({
+          ...s,
+          ...action.payload,
+          isLoading: false
+        }),
+        failure: s => ({
+          ...s,
+          isLoading: false,
+          isError: true,
+          errorMsg: action.payload
+        })
+      });
 
     default:
       return state;

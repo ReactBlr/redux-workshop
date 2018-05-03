@@ -1,4 +1,5 @@
 import * as actionTypes from "../actionTypes";
+import { handle } from "redux-pack";
 
 const initialState = {
   byId: {},
@@ -10,30 +11,41 @@ const initialState = {
 
 export default function cartItemsReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.ADD_ITEMS_TO_CART_REQUEST:
-    case actionTypes.GET_CART_ITEMS_REQUEST:
-      return {
-        ...state,
-        isLoading: true
-      };
+    case actionTypes.GET_CART_ITEMS:
+      return handle(state, action, {
+        start: s => ({ ...s, isLoading: true }),
+        success: s => ({
+          ...s,
+          ...action.payload,
+          isLoading: false
+        }),
+        failure: s => ({
+          ...s,
+          isLoading: false,
+          isError: true,
+          errorMsg: action.payload
+        })
+      });
 
-    case actionTypes.GET_CART_ITEMS_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        isLoading: false
-      };
-
-    case actionTypes.ADD_ITEMS_TO_CART_SUCCESS:
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [action.payload.id]: action.payload
-        },
-        ids: [...state.ids, action.payload.id],
-        isLoading: false
-      };
+    case actionTypes.ADD_ITEMS_TO_CART:
+      return handle(state, action, {
+        start: s => ({ ...s, isLoading: true }),
+        success: s => ({
+          ...s,
+          byId: {
+            ...state.byId,
+            [action.payload.id]: action.payload
+          },
+          ids: [...state.ids, action.payload.id],
+          isLoading: false
+        }),
+        failure: s => ({
+          ...s,
+          isLoading: false,
+          isError: true,
+          errorMsg: action.payload
+        })
+      });
 
     default:
       return state;
