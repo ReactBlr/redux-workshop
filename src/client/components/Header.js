@@ -25,6 +25,26 @@ export default class Header extends React.Component {
             <NavItem>
               <Link
                 className={classnames("nav-link", {
+                  active: pathname === "/products/samsung"
+                })}
+                to="/products/samsung"
+              >
+                Samsung
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link
+                className={classnames("nav-link", {
+                  active: pathname === "/products/apple"
+                })}
+                to="/products/apple"
+              >
+                Apple
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link
+                className={classnames("nav-link", {
                   active: pathname === "/cart"
                 })}
                 to="/cart"

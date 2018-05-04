@@ -25,16 +25,32 @@ function Product({ product }) {
 
 class Products extends React.Component {
   componentDidMount() {
-    const { productActions } = this.props;
-    productActions.getProducts();
+    const { productActions, match } = this.props;
+    const brand = match.params.brand;
+    productActions.getProducts(brand);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { match, productActions } = this.props;
+    if (nextProps.match.params.brand !== match.params.brand) {
+      productActions.getProducts(nextProps.match.params.brand);
+    }
+  }
+
   render() {
-    const { products } = this.props;
+    const { products, match } = this.props;
+    const brand = match.params.brand;
+    const filteredProducts =
+      brand &&
+      Object.values(products.byId).filter(product => {
+        console.log(product.brand);
+        return product.brand.toLowerCase() === brand.toLowerCase();
+      });
     return (
       <div>
         Products
         <ListGroup>
-          {Object.values(products.byId).map(product => (
+          {filteredProducts.map(product => (
             <Product key={product.id} product={product} />
           ))}
         </ListGroup>

@@ -9,6 +9,7 @@
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "express": "^4.16.2",
+    "lodash": "4.17.10",
     "mongoose": "^4.13.6",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

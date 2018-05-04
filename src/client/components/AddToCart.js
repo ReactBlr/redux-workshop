@@ -13,6 +13,7 @@ class AddToCart extends React.Component {
     } = this.props;
     return (
       <Button
+        disabled={isLoading}
         className="mt-4"
         color="primary"
         onClick={() => addItemsToCart(product)}

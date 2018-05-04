@@ -1,5 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import { handle } from "redux-pack";
+import merge from "lodash/merge";
 
 const initialState = {
   byId: {},
@@ -15,11 +16,14 @@ export default function productsReducer(state = initialState, action) {
       return handle(state, action, {
         start: s => ({
           ...s,
+          byId: {},
+          ids: [],
           isLoading: true
         }),
         success: s => ({
           ...s,
-          ...action.payload,
+          byId: merge({}, s.byId, action.payload.byId),
+          ids: [...s.ids, action.payload.ids],
           isLoading: false
         }),
         failure: s => ({
