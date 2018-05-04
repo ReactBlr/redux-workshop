@@ -4,7 +4,8 @@ import morgan from "morgan";
 import {
   getUser,
   getProducts,
-  getProduct,
+  getProductById,
+  getProductsByBrand,
   getCartItems,
   getCartItem,
   addToCart,
@@ -13,7 +14,7 @@ import {
 const PORT = 8000;
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(
@@ -31,9 +32,9 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
-  setTimeout(next, 500);
-});
+// app.use(function(req, res, next) {
+//   setTimeout(next, 500);
+// });
 
 app.get("/api/user", function(req, res) {
   res.json(getUser());
@@ -43,9 +44,13 @@ app.get("/api/products", function(req, res) {
   res.json(getProducts());
 });
 
-app.get("/api/products/:id", function(req, res) {
+app.get("/api/products/:id(\\d+)/", function(req, res) {
   const id = parseInt(req.params.id, 10);
-  res.json(getProduct(id));
+  res.json(getProductById(id));
+});
+
+app.get("/api/products/:brand(\\w+)/", function(req, res) {
+  res.json(getProductsByBrand(req.params.brand));
 });
 
 app.get("/api/cart-items", function(req, res) {
@@ -58,7 +63,7 @@ app.get("/api/cart-items/:id", function(req, res) {
 });
 
 app.post("/api/cart-items", function(req, res) {
-  res.json(addToCart(req.body));
+  addToCart(req.body).then(response => res.json(response));
 });
 
 app.post("/api/cart-items/:id", function(req, res) {
