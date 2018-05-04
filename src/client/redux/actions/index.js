@@ -6,9 +6,10 @@ export const getProducts = productId => {
   return dispatch => {
     return fetch("/api/products/").then(async response => {
       const responseData = await response.json();
+      const data = transformProductsApi(responseData);
       dispatch({
         type: actionTypes.GET_PRODUCTS_SUCCESS,
-        payload: responseData
+        payload: data
       });
     });
   };
