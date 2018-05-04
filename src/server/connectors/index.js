@@ -12,6 +12,14 @@ let products = [
     description: "Ergonomic keyboard",
     price: 3000,
     url: "/img/keyboard.jpeg"
+  },
+  {
+    id: 3,
+    name: "Keyboard",
+    brand: "Samsung",
+    description: "Ergonomic keyboard",
+    price: 3000,
+    url: "/img/keyboard.jpeg"
   }
 ];
 
@@ -31,6 +39,12 @@ export function getProducts() {
 
 export function getProduct(id) {
   return [products.find(product => product.id === id)];
+}
+
+export function getProductsByBrand(brand) {
+  return products.filter(
+    product => product.brand.toLowerCase() === brand.toLowerCase()
+  );
 }
 
 export function getCartItem(id) {

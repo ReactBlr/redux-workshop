@@ -4,7 +4,8 @@ import morgan from "morgan";
 import {
   getUser,
   getProducts,
-  getProduct,
+  getProductById,
+  getProductsByBrand,
   getCartItems,
   getCartItem,
   addToCart,
@@ -43,9 +44,13 @@ app.get("/api/products", function(req, res) {
   res.json(getProducts());
 });
 
-app.get("/api/products/:id", function(req, res) {
+app.get("/api/products/:id(\\d+)/", function(req, res) {
   const id = parseInt(req.params.id, 10);
-  res.json(getProduct(id));
+  res.json(getProductById(id));
+});
+
+app.get("/api/products/:brand(\\w+)/", function(req, res) {
+  getProductsByBrand(req.params.brand).then(response => res.json(response));
 });
 
 app.get("/api/cart-items", function(req, res) {

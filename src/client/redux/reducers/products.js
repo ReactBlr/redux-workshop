@@ -1,4 +1,5 @@
 import * as actionTypes from "../actionTypes";
+import merge from "lodash/merge";
 
 const initialState = {
   byId: {},
@@ -13,13 +14,16 @@ export default function productsReducer(state = initialState, action) {
     case actionTypes.GET_CART_ITEMS_REQUEST:
       return {
         ...state,
+        byId: {},
+        ids: [],
         isLoading: true
       };
 
     case actionTypes.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        byId: merge({}, state.byId, action.payload.byId),
+        ids: [...state.ids, action.payload.ids],
         isLoading: false
       };
 
