@@ -3,8 +3,9 @@ import { transformProductsApi } from "../transformers/transformProductsApi";
 import { transformGetCartItemsApi } from "../transformers/transformGetCartItemsApi";
 
 export const getProducts = productId => {
+  const apiUrl = productId ? `/api/products/${productId}` : "/api/products";
   return dispatch => {
-    return fetch("/api/products/").then(async response => {
+    return fetch(apiUrl).then(async response => {
       const responseData = await response.json();
       const data = transformProductsApi(responseData);
       dispatch({

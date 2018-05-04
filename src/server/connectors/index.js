@@ -2,6 +2,7 @@ let products = [
   {
     id: 1,
     name: "Macbook",
+    brand: "Apple",
     description: "Latest Macbook with 16GB ram and Quad core processor",
     price: 65000,
     url: "/img/macbook.jpeg"
@@ -9,6 +10,7 @@ let products = [
   {
     id: 2,
     name: "Keyboard",
+    brand: "Apple",
     description: "Ergonomic keyboard",
     price: 3000,
     url: "/img/keyboard.jpeg"
@@ -37,7 +39,7 @@ export function getProducts() {
   return products;
 }
 
-export function getProduct(id) {
+export function getProductById(id) {
   return [products.find(product => product.id === id)];
 }
 

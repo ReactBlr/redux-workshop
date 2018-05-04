@@ -25,9 +25,18 @@ function Product({ product }) {
 
 class Products extends React.Component {
   componentDidMount() {
-    const { productActions } = this.props;
-    productActions.getProducts();
+    const { productActions, match } = this.props;
+    const brand = match.params.brand;
+    productActions.getProducts(brand);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { match, productActions } = this.props;
+    if (nextProps.match.params.brand !== match.params.brand) {
+      productActions.getProducts(nextProps.match.params.brand);
+    }
+  }
+
   render() {
     const { products } = this.props;
     return (

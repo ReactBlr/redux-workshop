@@ -50,7 +50,7 @@ app.get("/api/products/:id(\\d+)/", function(req, res) {
 });
 
 app.get("/api/products/:brand(\\w+)/", function(req, res) {
-  getProductsByBrand(req.params.brand).then(response => res.json(response));
+  res.json(getProductsByBrand(req.params.brand));
 });
 
 app.get("/api/cart-items", function(req, res) {
