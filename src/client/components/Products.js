@@ -39,18 +39,19 @@ class Products extends React.Component {
 
   render() {
     const { products, match } = this.props;
-    const brand = match.params.brand;
-    const filteredProducts =
-      brand &&
-      Object.values(products.byId).filter(product => {
-        console.log(product.brand);
-        return product.brand.toLowerCase() === brand.toLowerCase();
-      });
+    // const brand = match.params.brand;
+    // const filteredProducts =
+    //   brand ?
+    //     Object.values(products.byId).filter(product => {
+    //       console.log(product.brand);
+    //       return product.brand.toLowerCase() === brand.toLowerCase();
+    //     })
+    //     : Object.values(products.byId);
     return (
       <div>
         Products
         <ListGroup>
-          {filteredProducts.map(product => (
+          {Object.values(products.byId).map(product => (
             <Product key={product.id} product={product} />
           ))}
         </ListGroup>
