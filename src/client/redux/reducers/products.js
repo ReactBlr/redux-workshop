@@ -22,8 +22,8 @@ export default function productsReducer(state = initialState, action) {
         }),
         success: s => ({
           ...s,
-          byId: merge({}, s.byId, action.payload.byId),
-          ids: [...s.ids, action.payload.ids],
+          byId: merge({}, s.byId, action.payload && action.payload.byId),
+          ids: [...s.ids, ...(action.payload ? action.payload.ids : [])],
           isLoading: false
         }),
         failure: s => ({
