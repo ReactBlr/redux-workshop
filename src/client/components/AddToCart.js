@@ -17,7 +17,7 @@ class AddToCart extends React.Component {
         color="primary"
         onClick={() => addItemsToCart(product)}
       >
-        {isLoading ? "Adding..." : "Add to cart"}
+        Add to cart
       </Button>
     );
   }
