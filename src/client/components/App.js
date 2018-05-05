@@ -6,9 +6,15 @@ import Product from "./Product";
 import Cart from "./Cart";
 import Header from "./Header";
 import { Container } from "reactstrap";
+import { connect } from "react-redux";
 
-export default class App extends React.Component {
+class App extends React.Component {
+  componentDidMount() {
+    this.props.incrementCounter();
+    this.props.setFirstName();
+  }
   render() {
+    console.log(this.props);
     return (
       <div>
         <Header location={this.props.location} />
@@ -24,3 +30,26 @@ export default class App extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state, props) {
+  return {
+    couter: state.counter
+    // firstName: state.user.firstName
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    incrementCounter: () =>
+      dispatch({
+        type: "INCREMENT"
+      }),
+    setFirstName: () =>
+      dispatch({
+        type: "SET_FIRST_NAME",
+        firstName: "kiran"
+      })
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
